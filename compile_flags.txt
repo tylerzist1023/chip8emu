@@ -1,0 +1,4 @@
+-I./include
+-L./lib
+-std=c++14
+-DUNICODE
