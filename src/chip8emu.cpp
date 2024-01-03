@@ -11,17 +11,17 @@ static inline void execute_op(uint16_t op);
 void load_rom(plat::FilePath path)
 {
     plat::FileContents contents = plat::load_entire_file(path);
-    if(!contents.memory)
+    if(!contents.data)
     {
         goto error;
     }
-    if(contents.size > MEMORY_SIZE - PROGRAM_OFFSET)
+    if(contents.len > MEMORY_SIZE - PROGRAM_OFFSET)
     {
         goto error;
     }
 
     memset(c8.rom, 0, (MEMORY_SIZE - PROGRAM_OFFSET)*sizeof(*c8.rom));
-    memcpy((c8.rom), contents.memory, contents.size);
+    memcpy((c8.rom), contents.data, contents.len);
     c8.loaded = false;
 
 error:

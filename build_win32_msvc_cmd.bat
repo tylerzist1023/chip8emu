@@ -1,5 +1,5 @@
 @echo off
-set VCVarsAllLocation="C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build"
+set VCVarsAllLocation="C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build"
 pushd %VCVarsAllLocation%
 call vcvarsall.bat x64
 popd

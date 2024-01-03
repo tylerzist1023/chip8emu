@@ -2,16 +2,14 @@
 
 namespace plat 
 {
-struct FileContents
+template<typename T>
+struct FPtr
 {
-	size_t size;
-	void* memory;
+    size_t len;
+    T* data;
 };
-struct FilePath
-{
-	size_t len;
-	char* str;
-};
+typedef FPtr<char> FilePath;
+typedef FPtr<void> FileContents;
 
 bool show_file_prompt(FilePath* path);
 void unload_path(FilePath path);

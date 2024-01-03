@@ -45,8 +45,8 @@ bool show_file_prompt(FilePath* path)
 
     if(GetOpenFileNameA(&ofn) && path)
     {
-        path->str = buf;
-        path->len = strlen(path->str);
+        path->data = buf;
+        path->len = strlen(path->data);
         return true;
     }
     else
@@ -57,9 +57,9 @@ bool show_file_prompt(FilePath* path)
 
 void unload_path(FilePath path)
 {
-    if(path.str)
-        free(path.str);
-    path.str = 0;
+    if(path.data)
+        free(path.data);
+    path.data = 0;
     path.len = 0;
 }
 
@@ -67,7 +67,7 @@ FileContents load_entire_file(FilePath path)
 {
     FileContents contents = {0};
 
-    HANDLE file = CreateFileA(path.str, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    HANDLE file = CreateFileA(path.data, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
     LARGE_INTEGER size;
 
@@ -107,14 +107,14 @@ FileContents load_entire_file(FilePath path)
         return contents;
     }
 
-    contents.memory = memory;
-    contents.size = size.QuadPart;
+    contents.data = memory;
+    contents.len = size.QuadPart;
     CloseHandle(file);
     return contents;
 }
 void unload_file(FileContents contents)
 {
-    VirtualFree(contents.memory, contents.size, MEM_DECOMMIT | MEM_RELEASE);
+    VirtualFree(contents.data, contents.len, MEM_DECOMMIT | MEM_RELEASE);
 }
 
 void update_input()
